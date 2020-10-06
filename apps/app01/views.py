@@ -30,7 +30,7 @@ def register(request):
 
 def user_all(request):
     user_obj_all = models.Userinfo.objects.all()
-    # print(user_obj_all)
+    print(user_obj_all)
     return render(request, 'user_all.html', locals())
 
 
