@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="@localhost" uuid="6ce300d4-e799-4974-a813-d1ca60feec75">
-      <driver-ref>mysql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306</jdbc-url>
-    </data-source>
     <data-source source="LOCAL" name="db" uuid="34490823-7225-401f-9c53-3e907feb6ac1">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:E:\study_file\apps\db.sqlite3</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="db [2]" uuid="e02a3b8c-66fe-4e1b-9226-7c0c5dcc69a8">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db.sqlite3</jdbc-url>
+      <libraries>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.31.1/sqlite-jdbc-3.31.1.jar</url>
+        </library>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.31.1/license.txt</url>
+        </library>
+      </libraries>
     </data-source>
   </component>
 </project>
