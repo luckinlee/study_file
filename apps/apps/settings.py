@@ -130,3 +130,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+# 设置默认的auth_user表,
+AUTH_USER_MODEL = 'app01.UserInfo'
