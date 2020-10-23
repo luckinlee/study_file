@@ -19,4 +19,5 @@ from app01 import views
 
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
+    url(r'^register/$', views.Register.as_view())
 ]

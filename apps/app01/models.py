@@ -6,8 +6,8 @@ from django.contrib.auth.models import AbstractUser
 
 # 用户表,扩展与auth表的结构
 class UserInfo(AbstractUser):
-    phone = models.IntegerField(null=True)
-    avatar = models.FileField(upload_to='avatar/', default='avatar/default.png')
+    phone = models.IntegerField(null=True, verbose_name='手机号')
+    avatar = models.FileField(upload_to='avatar/', default='avatar/default.png', verbose_name='头像')
     blog = models.OneToOneField(to='Blog', null=True)  # 关联个人站点
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
@@ -43,8 +43,8 @@ class Article(models.Model):
     title = models.CharField(max_length=64, verbose_name='文章标题')
     desc = models.CharField(max_length=255, verbose_name='文章简介')
     content = models.TextField(verbose_name="文章内容")
-    up_num = models.BigIntegerField(default=100)
-    down_num = models.BigIntegerField(default=100)
+    up_num = models.BigIntegerField(default=100, verbose_name='点赞数')
+    down_num = models.BigIntegerField(default=100, verbose_name='点踩数')
     comment_num = models.BigIntegerField(default=100, verbose_name='评论数')
     blog = models.ForeignKey(to='Blog', null=True)  # 关联个人站点
     category = models.ForeignKey(to='Category', null=True)
@@ -73,6 +73,6 @@ class Comment(models.Model):
     user = models.ForeignKey(to='UserInfo')
     article = models.ForeignKey(to='Article')
     content = models.CharField(max_length=255)
-    parent = models.ForeignKey(to='self', null=True)  # 跟评论或者子评论
+    parent = models.ForeignKey(to='self', null=True)  # 根评论和子评论,子评论关联根评论(self自关联)
     create_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)

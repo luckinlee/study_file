@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+    <script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1 class="text-center" style="margin-bottom: 30px">注册</h1>
+            <form id="myForm">
+                {% csrf_token %}
+                {% for form in register_forms_obj %}
+                    <div class="form-group">
+                        <label for="{{ form.auto_id }}">{{ form.label }}</label>
+                        {{ form }}
+                        <span style="color:red; display: inline-block;height: 12px"></span>
+                    </div>
+                {% endfor %}
+                <div class="form-group">
+                    <label for="myFile">头像
+                        {% load static %}
+                        <img src="{% static 'img/default.png' %}" alt="" id="myImg" style="margin-left:30px" width="80">
+                    </label>
+                    <input type="file" id="myFile" name="avatar" style="display: none">
+                </div>
+                <input type="button" class="btn btn-primary pull-right" value="注册" id="comment">
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $('#myFile').change(function () {
+        // 1.生成一个文件阅读器
+        let myFileReader = new FileReader();
+        // 2.获取用户上传的文件头像
+        let FileObj = $(this)[0].files[0];
+        // 3.将文件对象交给阅读器对象读取,异步操作,IO操作
+        myFileReader.readAsDataURL(FileObj);
+        // 4:用文件阅读器将文件展示在页面
+        myFileReader.onload = function () {
+            $('#myImg').attr('src', myFileReader.result)
+        };
+    });
+    $('#comment').click(function () {
+        let formData = new FormData();
+        // serializeArray() 获取所有的form表单的普通键值对数据
+        $.each($('#myForm').serializeArray(), function (index, obj) {
+            formData.append(obj.name, obj.value)
+        });
+        formData.append('avatar', $('#myFile')[0].files[0]);
+        $.ajax({
+            url: '',
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (args) {
+                if (args.code === '200') {
+                    window.location.href = args.url
+                } else {
+                    $.each(args.msg, function (index, obj) {
+                        let target_id = '#id_' + index;
+                        $(target_id).next().text(obj[0]).parent().addClass('has-error')
+
+                    })
+                }
+            }
+        })
+    });
+    $('input').focus(function () {
+        $(this).next().text('').parent().removeClass('has-error')
+    })
+</script>
+</body>
+</html>
