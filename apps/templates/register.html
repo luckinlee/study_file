@@ -61,13 +61,12 @@
             contentType: false,
             processData: false,
             success: function (args) {
-                if (args.code === '200') {
+                if (args.code === 200) {
                     window.location.href = args.url
                 } else {
                     $.each(args.msg, function (index, obj) {
                         let target_id = '#id_' + index;
                         $(target_id).next().text(obj[0]).parent().addClass('has-error')
-
                     })
                 }
             }
