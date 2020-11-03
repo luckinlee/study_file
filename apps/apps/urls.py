@@ -19,7 +19,8 @@ from app01 import views
 
 urlpatterns = [
     # url(r'^admin/', admin.site.urls),
-    url(r'^register/$', views.Register.as_view()),
-    url(r'^login/$', views.Login.as_view()),
-    url(r'^get_code/', views.get_code)
+    url(r'^register/$', views.Register.as_view(), name='register'),
+    url(r'^login/$', views.Login.as_view(), name='login'),
+    url(r'^get_code/', views.get_code, name='get_code'),
+    url(r'^$', views.home.as_view(), name='home'),
 ]

@@ -32,6 +32,7 @@ class Register(View):
 
 
 class Login(View):
+
     def get(self, request):
         return render(request, 'login.html', locals())
 
@@ -54,8 +55,36 @@ class Login(View):
         return JsonResponse(back_dict, safe=False)
 
 
+# 验证码
 def get_code(request):
     code, img = ret_code_img()
     ret = HttpResponse(img)
     request.session['code'] = code
     return ret
+
+
+def set_password(request):
+    back_dic = {}
+    if request.method == 'POST':
+        old_password = request.POST.get('old_password')
+        is_correct = request.user.check_password(old_password)
+        if is_correct:
+            new_password = request.POST.get('new_password')
+            confirm_password = request.POST.get('confirm_password')
+            if new_password == confirm_password:
+                request.user.set_password(new_password)
+                request.user.save()
+                back_dic['msg'] = '修改成功'
+            else:
+                back_dic['code'] = 1001
+                back_dic['error_msg'] = '两次密码不一致'
+        else:
+            back_dic['code'] = 1002
+            back_dic['error_msg'] = '原密码输入有误'
+        return JsonResponse(back_dic)
+
+
+class home(View):
+
+    def get(self, request):
+        return render(request, 'home.html', locals())
